@@ -5,7 +5,7 @@ namespace Tests\Feature\app\Http\Controllers;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class AccountControllerTest extends TestCase
+class GetBalanceControllerTest extends TestCase
 {
     /**
      * Testa o cenário onde o account_id é fornecido, mas não corresponde
