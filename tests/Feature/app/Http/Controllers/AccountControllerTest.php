@@ -15,13 +15,17 @@ class AccountControllerTest extends TestCase
      */
     public function testShouldBeErrorWhenCallGetBalanceWithInvalidAccountId(): void
     {
-        $invalidAccountId = 456;
+        $invalidAccountId = 123;
 
         $response = $this->withHeaders([
             'Accept' => 'application/json',
         ])->get("/api/balance?account_id={$invalidAccountId}");
 
+        $expectedResponse = 0;
+
         $response->assertStatus(Response::HTTP_NOT_FOUND);
+        $response->assertJsonFragment([$expectedResponse]);
+        $this->assertEquals($expectedResponse, $response->json());
     }
 
     /**
@@ -31,7 +35,7 @@ class AccountControllerTest extends TestCase
      */
     public function testShouldBeSuccessWhenCallGetBalanceWithValidAccountId(): void
     {
-        $validAccountId = 123;
+        $validAccountId = 100;
 
         $availableBalance = 20;
 
