@@ -2,7 +2,7 @@
 
 namespace App\Infraestructure\Http\Controllers;
 
-use App\Domain\Accounts\UseCases\GetAccountBalanceUseCase;
+use App\Domain\Accounts\UseCases\GetAccountBalance\GetAccountBalanceUseCase;
 use App\Domain\Exceptions\AccountNotFound;
 use App\Infraestructure\Http\Requests\GetBalanceRequest;
 use Illuminate\Http\JsonResponse;

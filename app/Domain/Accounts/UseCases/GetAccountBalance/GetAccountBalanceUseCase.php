@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Accounts\UseCases;
+namespace App\Domain\Accounts\UseCases\GetAccountBalance;
 
 use App\Domain\Exceptions\AccountNotFound;
 
