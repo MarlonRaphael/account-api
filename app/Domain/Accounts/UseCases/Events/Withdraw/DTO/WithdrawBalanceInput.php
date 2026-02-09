@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Accounts\UseCases\Withdraw\DTO;
+namespace App\Domain\Accounts\UseCases\Events\Withdraw\DTO;
 
-final readonly class WithdrawBalanceEventInput
+final readonly class WithdrawBalanceInput
 {
     public function __construct(
         public int $originAccountId,

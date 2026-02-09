@@ -3,16 +3,16 @@
 namespace Domain\Account\UseCases\GetAccountBalance;
 
 use App\Domain\Accounts\Exceptions\AccountNotFound;
-use App\Domain\Accounts\UseCases\Balance\GetAccountBalanceUseCase;
+use App\Domain\Accounts\UseCases\Balance\GetBalanceUseCase;
 use Tests\TestCase;
 
 class GetAccountBalanceUseCaseTest extends TestCase
 {
-    private GetAccountBalanceUseCase $useCase;
+    private GetBalanceUseCase $useCase;
 
     public function setUp(): void
     {
-        $this->useCase = new GetAccountBalanceUseCase();
+        $this->useCase = new GetBalanceUseCase();
     }
 
     public function testGetAccountBalanceSuccess(): void

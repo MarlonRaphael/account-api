@@ -4,7 +4,7 @@ namespace App\Domain\Accounts\UseCases\Balance;
 
 use App\Domain\Accounts\Exceptions\AccountNotFound;
 
-class GetAccountBalanceUseCase
+class GetBalanceUseCase
 {
     public static array $availableAccounts = [
         100

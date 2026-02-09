@@ -2,7 +2,7 @@
 
 namespace App\Infraestructure\Http\Formatters;
 
-use App\Domain\Accounts\UseCases\Withdraw\DTO\WithdrawBalanceEventOutput;
+use App\Domain\Accounts\UseCases\Events\Withdraw\DTO\WithdrawBalanceOutput;
 use App\Infraestructure\DTO\Output;
 use Illuminate\Http\JsonResponse;
 use InvalidArgumentException;
@@ -12,7 +12,7 @@ class WithdrawOutputFormatter implements OutputFormatter
 {
     public function format(Output $output): JsonResponse
     {
-        if (!$output instanceof WithdrawBalanceEventOutput) {
+        if (!$output instanceof WithdrawBalanceOutput) {
             throw new InvalidArgumentException('Invalid output type');
         }
 

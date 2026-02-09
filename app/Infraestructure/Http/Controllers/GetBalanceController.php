@@ -3,7 +3,7 @@
 namespace App\Infraestructure\Http\Controllers;
 
 use App\Domain\Accounts\Exceptions\AccountNotFound;
-use App\Domain\Accounts\UseCases\Balance\GetAccountBalanceUseCase;
+use App\Domain\Accounts\UseCases\Balance\GetBalanceUseCase;
 use App\Infraestructure\Http\Requests\GetBalanceRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +11,7 @@ use Throwable;
 
 class GetBalanceController extends Controller
 {
-    public function __construct(private GetAccountBalanceUseCase $useCase)
+    public function __construct(private GetBalanceUseCase $useCase)
     {
         //
     }

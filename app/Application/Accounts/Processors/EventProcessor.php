@@ -4,20 +4,20 @@ namespace App\Application\Accounts\Processors;
 
 use App\Domain\Accounts\Enums\EventTypes;
 use App\Domain\Accounts\Repositories\AccountRepository;
-use App\Domain\Accounts\UseCases\Deposit\DepositAmountEventUseCase;
-use App\Domain\Accounts\UseCases\Deposit\DTO\DepositAmountEventInput;
-use App\Domain\Accounts\UseCases\Deposit\DTO\DepositAmountEventOutput;
-use App\Domain\Accounts\UseCases\Withdraw\DTO\WithdrawBalanceEventInput;
-use App\Domain\Accounts\UseCases\Withdraw\DTO\WithdrawBalanceEventOutput;
-use App\Domain\Accounts\UseCases\Withdraw\WithdrawBalanceEventUseCase;
+use App\Domain\Accounts\UseCases\Events\Deposit\DepositAmountUseCase;
+use App\Domain\Accounts\UseCases\Events\Deposit\DTO\DepositAmountInput;
+use App\Domain\Accounts\UseCases\Events\Deposit\DTO\DepositAmountOutput;
+use App\Domain\Accounts\UseCases\Events\Withdraw\DTO\WithdrawBalanceInput;
+use App\Domain\Accounts\UseCases\Events\Withdraw\DTO\WithdrawBalanceOutput;
+use App\Domain\Accounts\UseCases\Events\Withdraw\WithdrawBalanceUseCase;
 use App\Infraestructure\Account\Repositories\InMemory\InMemoryAccountRepository;
 use App\Infraestructure\DTO\Output;
 
 class EventProcessor
 {
     public function __construct(
-        private WithdrawBalanceEventUseCase $withdrawBalanceEventUseCase,
-        private DepositAmountEventUseCase   $depositAmountEventUseCase,
+        private WithdrawBalanceUseCase $withdrawBalanceEventUseCase,
+        private DepositAmountUseCase   $depositAmountEventUseCase,
     ) {}
 
     public function process(array $event): Output
@@ -33,11 +33,11 @@ class EventProcessor
 
     /**
      * @param array $withdrawData
-     * @return WithdrawBalanceEventOutput
+     * @return WithdrawBalanceOutput
      */
-    private function handleWithdraw(array $withdrawData): WithdrawBalanceEventOutput
+    private function handleWithdraw(array $withdrawData): WithdrawBalanceOutput
     {
-        $input = new WithdrawBalanceEventInput(
+        $input = new WithdrawBalanceInput(
             originAccountId: $withdrawData['origin'],
             amount: $withdrawData['amount']
         );
@@ -45,9 +45,9 @@ class EventProcessor
         return $this->withdrawBalanceEventUseCase->execute($input);
     }
 
-    private function handleDeposit(array $validated, AccountRepository $repository): DepositAmountEventOutput
+    private function handleDeposit(array $validated, AccountRepository $repository): DepositAmountOutput
     {
-        $input = new DepositAmountEventInput(
+        $input = new DepositAmountInput(
             $validated['type'],
             $validated['destination'],
             $validated['amount']

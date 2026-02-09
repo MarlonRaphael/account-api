@@ -2,7 +2,7 @@
 
 namespace App\Infraestructure\Http\Formatters;
 
-use App\Domain\Accounts\UseCases\Deposit\DTO\DepositAmountEventOutput;
+use App\Domain\Accounts\UseCases\Events\Deposit\DTO\DepositAmountOutput;
 use App\Infraestructure\DTO\Output;
 use Illuminate\Http\JsonResponse;
 use InvalidArgumentException;
@@ -12,7 +12,7 @@ class DepositOutputFormatter implements OutputFormatter
 {
     public function format(Output $output): JsonResponse
     {
-        if (!$output instanceof DepositAmountEventOutput) {
+        if (!$output instanceof DepositAmountOutput) {
             throw new InvalidArgumentException('Invalid output type');
         }
 

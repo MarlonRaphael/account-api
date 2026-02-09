@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Domain\Accounts\UseCases\Deposit\DTO;
+namespace App\Domain\Accounts\UseCases\Events\Deposit\DTO;
 
 use App\Infraestructure\DTO\Output;
 
-final readonly class DepositAmountEventOutput implements Output
+final readonly class DepositAmountOutput implements Output
 {
     public function __construct(
         public int $id,

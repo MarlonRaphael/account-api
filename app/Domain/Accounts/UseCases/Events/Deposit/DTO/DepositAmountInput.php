@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Accounts\UseCases\Deposit\DTO;
+namespace App\Domain\Accounts\UseCases\Events\Deposit\DTO;
 
-final readonly class DepositAmountEventInput
+final readonly class DepositAmountInput
 {
     public function __construct(
         public string $type,

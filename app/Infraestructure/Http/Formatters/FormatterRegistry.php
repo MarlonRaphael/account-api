@@ -2,8 +2,8 @@
 
 namespace App\Infraestructure\Http\Formatters;
 
-use App\Domain\Accounts\UseCases\Deposit\DTO\DepositAmountEventOutput;
-use App\Domain\Accounts\UseCases\Withdraw\DTO\WithdrawBalanceEventOutput;
+use App\Domain\Accounts\UseCases\Events\Deposit\DTO\DepositAmountOutput;
+use App\Domain\Accounts\UseCases\Events\Withdraw\DTO\WithdrawBalanceOutput;
 use RuntimeException;
 
 class FormatterRegistry
@@ -12,8 +12,8 @@ class FormatterRegistry
 
     public function __construct()
     {
-        $this->register(WithdrawBalanceEventOutput::class, new WithdrawOutputFormatter());
-        $this->register(DepositAmountEventOutput::class, new DepositOutputFormatter());
+        $this->register(WithdrawBalanceOutput::class, new WithdrawOutputFormatter());
+        $this->register(DepositAmountOutput::class, new DepositOutputFormatter());
     }
 
     public function register(string $outputClass, OutputFormatter $formatter): void
