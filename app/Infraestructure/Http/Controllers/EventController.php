@@ -8,7 +8,6 @@ use App\Domain\Accounts\UseCases\Withdraw\Exceptions\NonExistingAccountException
 use App\Domain\Accounts\UseCases\Withdraw\WithdrawBalanceEventUseCase;
 use App\Infraestructure\Http\Requests\HandleEventRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -18,23 +17,18 @@ class EventController extends Controller
         private WithdrawBalanceEventUseCase $withdrawBalanceEventUseCase
     ) {}
 
-    public function handle(Request $request): JsonResponse
+    public function handle(HandleEventRequest $request): JsonResponse
     {
-        $requestData = $request->only([
-            'type',
-            'origin',
-            'destination',
-            'amount',
-        ]);
+        $validated = $request->validated();
 
         try {
-            $eventType = EventTypes::tryFrom($requestData['type']);
+            $eventType = EventTypes::tryFrom($validated['type']);
         } catch (Throwable $exception) {
             return $this->respondNotFound();
         }
 
         return match ($eventType) {
-            EventTypes::WITHDRAW => $this->handleWithdraw($requestData),
+            EventTypes::WITHDRAW => $this->handleWithdraw($validated),
             default => $this->respondNotFound(),
         };
     }
@@ -43,7 +37,7 @@ class EventController extends Controller
     {
         try {
             $input = new WithdrawBalanceEventInput(
-                originAccountId: $withdrawData['destination'],
+                originAccountId: $withdrawData['origin'],
                 amount: $withdrawData['amount']
             );
 
@@ -52,7 +46,7 @@ class EventController extends Controller
             return $this->respondNotFound();
         }
 
-        return response()->json($response, Response::HTTP_NOT_FOUND);
+        return response()->json($response->toArray(), Response::HTTP_CREATED);
     }
 
     private function respondNotFound(): JsonResponse

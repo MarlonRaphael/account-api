@@ -9,36 +9,84 @@ use Tests\TestCase;
 
 class EventControllerTest extends TestCase
 {
-    #[DataProvider('additionProvider')]
-    public function testShouldBeErrorWhenWithdrawNonExistingAccount(
-        string $type,
-        int $originAccount,
-        int $destinationAccount,
-        int $amount,
+    #[DataProvider('dataProvider')]
+    public function testShouldReturnSuccessWhenWithdrawAccountExists(
+        array $requestBody,
+        int $expectedStatus,
         array $expectedResponseBody
     ): void {
+        $response = $this->postJson('api/event', $requestBody);
 
-        $response = $this->postJson('api/event', [
-            'type' => $type,
-            'origin' => $originAccount,
-            'destination' => $destinationAccount,
-            'amount' => $amount,
-        ]);
-
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
+        $response->assertStatus($expectedStatus);
         $response->assertJson($expectedResponseBody);
     }
 
-    public static function additionProvider(): array
+    #[DataProvider('dataProvider')]
+    public function testShouldBeErrorWhenWithdrawNonExistingAccount(
+        array $requestBody,
+        int $expectedStatus,
+        array $expectedResponseBody
+    ): void {
+        $response = $this->postJson('api/event', $requestBody);
+
+        $response->assertStatus($expectedStatus);
+        $response->assertJson($expectedResponseBody);
+    }
+
+    #[DataProvider('dataProvider')]
+    public function testShouldBeErrorWhenWithdrawAmountNotInformed(
+        array $requestBody,
+        int $expectedStatus,
+        array $expectedResponseBody
+    ): void {
+        $response = $this->postJson('api/event', $requestBody);
+
+        $response->assertStatus($expectedStatus);
+        $response->assertJson($expectedResponseBody);
+    }
+
+    public static function dataProvider(): array
     {
         return [
+            'testShouldReturnSuccessWhenAccountExists' => [
+                'requestBody' => [
+                    'type' => EventTypes::WITHDRAW->value,
+                    'origin' => 100,
+                    'amount' => 5,
+                ],
+                'expectedStatus' => Response::HTTP_CREATED,
+                'expectedResponseBody' => [
+                    'origin' => [
+                        'id' => 100,
+                        'balance' => 15,
+                    ]
+                ],
+            ],
             'testShouldBeErrorWhenWithdrawNonExistingAccount' => [
-                EventTypes::WITHDRAW->value,
-                200,
-                999,
-                10,
-                'expectedResponseBody' => [0]
-            ]
+                'requestBody' => [
+                    'type' => EventTypes::WITHDRAW->value,
+                    'origin' => 200,
+                    'amount' => 10,
+                ],
+                'expectedStatus' => Response::HTTP_NOT_FOUND,
+                'expectedResponseBody' => [0],
+            ],
+            'testShouldBeErrorWhenWithdrawAmountNotInformed' => [
+                'requestBody' => [
+                    'type' => EventTypes::WITHDRAW->value,
+                    'origin' => 100,
+                ],
+                'expectedStatus' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'expectedResponseBody' => [
+                    'message' => 'validation.required',
+                    'errors' => [
+                        'amount' => [
+                            'validation.required'
+                        ]
+                    ]
+                ],
+            ],
         ];
     }
+
 }
