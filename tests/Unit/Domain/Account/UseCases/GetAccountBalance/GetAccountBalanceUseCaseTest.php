@@ -2,8 +2,8 @@
 
 namespace Domain\Account\UseCases\GetAccountBalance;
 
-use App\Domain\Accounts\UseCases\GetAccountBalance\GetAccountBalanceUseCase;
-use App\Domain\Exceptions\AccountNotFound;
+use App\Domain\Accounts\Exceptions\AccountNotFound;
+use App\Domain\Accounts\UseCases\Balance\GetAccountBalanceUseCase;
 use Tests\TestCase;
 
 class GetAccountBalanceUseCaseTest extends TestCase

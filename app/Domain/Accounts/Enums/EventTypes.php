@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Accounts\Enum;
+namespace App\Domain\Accounts\Enums;
 
 Enum EventTypes: string
 {

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\app\Http\Controllers;
 
-use App\Domain\Accounts\Enum\EventTypes;
+use App\Domain\Accounts\Enums\EventTypes;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -43,6 +43,23 @@ class EventControllerTest extends TestCase
 
         $response->assertStatus($expectedStatus);
         $response->assertJson($expectedResponseBody);
+    }
+
+    public function testShouldBeSuccessWhenDepositDestinationAccountExists()
+    {
+        $response = $this->postJson('api/event', [
+            'type' => EventTypes::DEPOSIT->value,
+            'destination' => 100,
+            'amount' => 10,
+        ]);
+
+        $response->assertStatus(Response::HTTP_CREATED);
+        $response->assertJson([
+            'destination' => [
+                'id' => 100,
+                'balance' => 10,
+            ],
+        ]);
     }
 
     public static function dataProvider(): array

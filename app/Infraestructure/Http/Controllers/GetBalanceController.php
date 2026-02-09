@@ -2,8 +2,8 @@
 
 namespace App\Infraestructure\Http\Controllers;
 
-use App\Domain\Accounts\UseCases\GetAccountBalance\GetAccountBalanceUseCase;
-use App\Domain\Exceptions\AccountNotFound;
+use App\Domain\Accounts\Exceptions\AccountNotFound;
+use App\Domain\Accounts\UseCases\Balance\GetAccountBalanceUseCase;
 use App\Infraestructure\Http\Requests\GetBalanceRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

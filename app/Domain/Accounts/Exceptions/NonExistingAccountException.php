@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Accounts\UseCases\Withdraw\Exceptions;
+namespace App\Domain\Accounts\Exceptions;
 
 use DomainException;
 use Throwable;

@@ -2,10 +2,9 @@
 
 namespace App\Infraestructure\Http\Controllers;
 
-use App\Domain\Accounts\Enum\EventTypes;
-use App\Domain\Accounts\UseCases\Withdraw\DTO\WithdrawBalanceEventInput;
-use App\Domain\Accounts\UseCases\Withdraw\Exceptions\NonExistingAccountException;
-use App\Domain\Accounts\UseCases\Withdraw\WithdrawBalanceEventUseCase;
+use App\Application\Accounts\Processors\EventProcessor;
+use App\Domain\Accounts\Exceptions\NonExistingAccountException;
+use App\Infraestructure\Http\Formatters\FormatterRegistry;
 use App\Infraestructure\Http\Requests\HandleEventRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,39 +13,24 @@ use Throwable;
 class EventController extends Controller
 {
     public function __construct(
-        private WithdrawBalanceEventUseCase $withdrawBalanceEventUseCase
+        private readonly EventProcessor $processor,
+        private readonly FormatterRegistry $formatterRegistry,
     ) {}
 
     public function handle(HandleEventRequest $request): JsonResponse
     {
-        $validated = $request->validated();
-
         try {
-            $eventType = EventTypes::tryFrom($validated['type']);
-        } catch (Throwable $exception) {
-            return $this->respondNotFound();
-        }
+            $output = $this->processor->process($request->validated());
+            $formatter = $this->formatterRegistry->getFormatter($output);
 
-        return match ($eventType) {
-            EventTypes::WITHDRAW => $this->handleWithdraw($validated),
-            default => $this->respondNotFound(),
-        };
-    }
-
-    private function handleWithdraw(array $withdrawData): JsonResponse
-    {
-        try {
-            $input = new WithdrawBalanceEventInput(
-                originAccountId: $withdrawData['origin'],
-                amount: $withdrawData['amount']
-            );
-
-            $response = $this->withdrawBalanceEventUseCase->execute($input);
+            return $formatter->format($output);
         } catch (NonExistingAccountException $exception) {
+            logger()->error($exception->getTraceAsString());
+            return $this->respondNotFound();
+        } catch (Throwable $exception) {
+            logger()->error($exception->getTraceAsString());
             return $this->respondNotFound();
         }
-
-        return response()->json($response->toArray(), Response::HTTP_CREATED);
     }
 
     private function respondNotFound(): JsonResponse

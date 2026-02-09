@@ -2,9 +2,9 @@
 
 namespace App\Domain\Accounts\UseCases\Withdraw;
 
+use App\Domain\Accounts\Exceptions\NonExistingAccountException;
 use App\Domain\Accounts\UseCases\Withdraw\DTO\WithdrawBalanceEventInput;
 use App\Domain\Accounts\UseCases\Withdraw\DTO\WithdrawBalanceEventOutput;
-use App\Domain\Accounts\UseCases\Withdraw\Exceptions\NonExistingAccountException;
 
 class WithdrawBalanceEventUseCase
 {

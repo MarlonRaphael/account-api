@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Accounts\UseCases\GetAccountBalance;
+namespace App\Domain\Accounts\UseCases\Balance;
 
-use App\Domain\Exceptions\AccountNotFound;
+use App\Domain\Accounts\Exceptions\AccountNotFound;
 
 class GetAccountBalanceUseCase
 {

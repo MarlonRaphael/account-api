@@ -2,7 +2,7 @@
 
 namespace App\Infraestructure\Http\Requests;
 
-use App\Domain\Accounts\Enum\EventTypes;
+use App\Domain\Accounts\Enums\EventTypes;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

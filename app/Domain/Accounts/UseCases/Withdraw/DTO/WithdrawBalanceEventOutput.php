@@ -2,10 +2,12 @@
 
 namespace App\Domain\Accounts\UseCases\Withdraw\DTO;
 
-final readonly class WithdrawBalanceEventOutput
+use App\Infraestructure\DTO\Output;
+
+final readonly class WithdrawBalanceEventOutput implements Output
 {
     public function __construct(
-        public int $originAccountId,
+        public int $accountId,
         public int $amount,
     ) {}
 
@@ -13,7 +15,7 @@ final readonly class WithdrawBalanceEventOutput
     {
         return [
             'origin' => [
-                'id' => $this->originAccountId,
+                'id' => $this->accountId,
                 'balance' => $this->amount,
             ]
         ];
