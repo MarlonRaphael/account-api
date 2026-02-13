@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infraestructure\Http\Requests;
+namespace App\Presentation\Account\Http\Requests;
 
 use App\Domain\Accounts\Enums\EventTypes;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -33,7 +33,7 @@ class HandleEventRequest extends FormRequest
             'origin' => [
                 Rule::requiredIf(fn () => in_array($this->input('type'), [
                     EventTypes::WITHDRAW->value,
-                    EventTypes::TRANSFER->value
+                    EventTypes::TRANSFER->value,
                 ])),
                 'integer'
             ],
@@ -52,3 +52,4 @@ class HandleEventRequest extends FormRequest
         ];
     }
 }
+

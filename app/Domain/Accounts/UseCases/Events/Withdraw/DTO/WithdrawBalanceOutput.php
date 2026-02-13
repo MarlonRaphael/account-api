@@ -2,7 +2,7 @@
 
 namespace App\Domain\Accounts\UseCases\Events\Withdraw\DTO;
 
-use App\Infraestructure\DTO\Output;
+use App\Presentation\Account\Http\Resources\Output;
 
 final readonly class WithdrawBalanceOutput implements Output
 {

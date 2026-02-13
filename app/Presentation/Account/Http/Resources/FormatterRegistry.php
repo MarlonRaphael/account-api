@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Infraestructure\Http\Formatters;
+namespace App\Presentation\Account\Http\Resources;
 
+use App\Domain\Accounts\UseCases\Balance\DTO\GetBalanceOutput;
 use App\Domain\Accounts\UseCases\Events\Deposit\DTO\DepositAmountOutput;
+use App\Domain\Accounts\UseCases\Events\Transfer\DTO\TransferOutput;
 use App\Domain\Accounts\UseCases\Events\Withdraw\DTO\WithdrawBalanceOutput;
 use RuntimeException;
 
@@ -14,6 +16,8 @@ class FormatterRegistry
     {
         $this->register(WithdrawBalanceOutput::class, new WithdrawOutputFormatter());
         $this->register(DepositAmountOutput::class, new DepositOutputFormatter());
+        $this->register(GetBalanceOutput::class, new GetBalanceFormatter());
+        $this->register(TransferOutput::class, new TransferOutputFormatter());
     }
 
     public function register(string $outputClass, OutputFormatter $formatter): void
@@ -32,3 +36,4 @@ class FormatterRegistry
         return $this->formatters[$class];
     }
 }
+

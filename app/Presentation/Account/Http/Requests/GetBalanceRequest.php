@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infraestructure\Http\Requests;
+namespace App\Presentation\Account\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -30,3 +30,4 @@ class GetBalanceRequest extends FormRequest
         ];
     }
 }
+

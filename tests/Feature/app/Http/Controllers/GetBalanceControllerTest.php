@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\app\Http\Controllers;
 
+use App\Domain\Accounts\Repositories\AccountRepository;
+use App\Persistence\Account\Repositories\InMemoryAccountRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -15,16 +17,16 @@ class GetBalanceControllerTest extends TestCase
      */
     public function testShouldBeErrorWhenCallGetBalanceWithInvalidAccountId(): void
     {
-        $invalidAccountId = 123;
+        $invalidAccountId = 1234;
 
         $response = $this->withHeaders([
             'Accept' => 'application/json',
         ])->get("/api/balance?account_id={$invalidAccountId}");
 
-        $expectedResponse = 0;
+        $expectedResponse = [0];
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
-        $response->assertJsonFragment([$expectedResponse]);
+        $response->assertJsonFragment($expectedResponse);
         $this->assertEquals($expectedResponse, $response->json());
     }
 
@@ -38,6 +40,9 @@ class GetBalanceControllerTest extends TestCase
         $validAccountId = 100;
 
         $availableBalance = 20;
+
+        $repository = $this->app->get(AccountRepository::class);
+        $repository->deposit($validAccountId, $availableBalance);
 
         $response = $this->withHeaders([
             'Accept' => 'application/json',

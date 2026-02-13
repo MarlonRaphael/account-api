@@ -1,7 +1,7 @@
 <?php
 
-use App\Infraestructure\Http\Controllers\EventController;
-use App\Infraestructure\Http\Controllers\GetBalanceController;
+use App\Presentation\Account\Http\Controllers\EventController;
+use App\Presentation\Account\Http\Controllers\GetBalanceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('balance', [GetBalanceController::class, 'getBalance']);

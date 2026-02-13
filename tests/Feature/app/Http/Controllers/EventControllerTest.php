@@ -47,6 +47,8 @@ class EventControllerTest extends TestCase
 
     public function testShouldBeSuccessWhenDepositDestinationAccountExists()
     {
+//        $this->markTestSkipped();
+
         $response = $this->postJson('api/event', [
             'type' => EventTypes::DEPOSIT->value,
             'destination' => 100,

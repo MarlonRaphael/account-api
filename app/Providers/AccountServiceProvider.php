@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use App\Domain\Accounts\Repositories\AccountRepository;
-use App\Infraestructure\Account\Repositories\InMemory\InMemoryAccountRepository;
+use App\Persistence\Account\Repositories\InMemoryAccountRepository;
+use App\Presentation\Account\Http\Resources\FormatterRegistry;
 use Illuminate\Support\ServiceProvider;
 
 class AccountServiceProvider extends ServiceProvider
@@ -13,10 +14,8 @@ class AccountServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(
-            AccountRepository::class,
-            fn () => new InMemoryAccountRepository()
-        );
+        $this->app->singleton(AccountRepository::class, fn () => new InMemoryAccountRepository());
+        $this->app->singleton(FormatterRegistry::class, fn () => new FormatterRegistry());
     }
 
     /**

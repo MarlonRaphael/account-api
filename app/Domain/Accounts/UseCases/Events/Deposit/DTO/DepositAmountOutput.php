@@ -2,7 +2,7 @@
 
 namespace App\Domain\Accounts\UseCases\Events\Deposit\DTO;
 
-use App\Infraestructure\DTO\Output;
+use App\Presentation\Account\Http\Resources\Output;
 
 final readonly class DepositAmountOutput implements Output
 {

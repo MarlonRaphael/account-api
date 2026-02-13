@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Infraestructure\Http\Controllers;
+namespace App\Presentation\Account\Http\Controllers;
 
 use App\Application\Accounts\Processors\EventProcessor;
 use App\Domain\Accounts\Exceptions\NonExistingAccountException;
-use App\Infraestructure\Http\Formatters\FormatterRegistry;
-use App\Infraestructure\Http\Requests\HandleEventRequest;
+use App\Presentation\Account\Http\Resources\FormatterRegistry;
+use App\Presentation\Account\Http\Requests\HandleEventRequest;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class EventController extends Controller
@@ -32,9 +31,5 @@ class EventController extends Controller
             return $this->respondNotFound();
         }
     }
-
-    private function respondNotFound(): JsonResponse
-    {
-        return response()->json([0], Response::HTTP_NOT_FOUND);
-    }
 }
+

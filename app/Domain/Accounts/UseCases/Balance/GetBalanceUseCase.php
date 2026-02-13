@@ -3,22 +3,20 @@
 namespace App\Domain\Accounts\UseCases\Balance;
 
 use App\Domain\Accounts\Exceptions\AccountNotFound;
+use App\Domain\Accounts\Repositories\AccountRepository;
+use App\Domain\Accounts\UseCases\Balance\DTO\GetBalanceInput;
+use App\Domain\Accounts\UseCases\Balance\DTO\GetBalanceOutput;
 
 class GetBalanceUseCase
 {
-    public static array $availableAccounts = [
-        100
-    ];
-
-    /**
-     * @throws AccountNotFound
-     */
-    public function execute(int $accountId): int
+    public function execute(GetBalanceInput $input, AccountRepository $accountRepository): GetBalanceOutput
     {
-        if (!in_array($accountId, self::$availableAccounts)) {
-            throw new AccountNotFound('Account not found');
+        $balance = $accountRepository->getBalance($input->accountId);
+
+        if (!$balance) {
+            throw new AccountNotFound();
         }
 
-        return 20;
+        return new GetBalanceOutput($balance);
     }
 }

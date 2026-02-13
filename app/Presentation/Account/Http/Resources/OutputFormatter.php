@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Infraestructure\Http\Formatters;
+namespace App\Presentation\Account\Http\Resources;
 
-use App\Infraestructure\DTO\Output;
 use Illuminate\Http\JsonResponse;
 
 interface OutputFormatter
 {
     public function format(Output $output): JsonResponse;
 }
+
