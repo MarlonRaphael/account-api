@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Domain\Accounts\Repositories\AccountRepository;
-use App\Persistence\Account\Repositories\InMemoryAccountRepository;
-use App\Presentation\Account\Http\Resources\FormatterRegistry;
+use App\Accounts\Domain\Repositories\AccountRepository;
+use App\Accounts\Persistence\Repositories\InMemoryAccountRepository;
+use App\Accounts\Presentation\Http\Resources\FormatterRegistry;
 use Illuminate\Support\ServiceProvider;
 
 class AccountServiceProvider extends ServiceProvider

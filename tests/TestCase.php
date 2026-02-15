@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use App\Domain\Accounts\Repositories\AccountRepository;
-use App\Persistence\Account\Repositories\InMemoryAccountRepository;
+use App\Accounts\Domain\Repositories\AccountRepository;
+use App\Accounts\Persistence\Repositories\InMemoryAccountRepository;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
